@@ -22,56 +22,58 @@ if(isset($_GET["id"])){
 /* on recupere l'action dans l'url */
 if(isset($_GET["action"])){
 
+    $action = $_GET["action"];
+
     /* supprimer un livre avec son id */
     if($action == "supprimer"){
         $idSupprimer = $_GET["id"];
         $livre->delete($idSupprimer);
-    }
+    } else {
 
-    $action = $_GET["action"];
-    $titre = $_POST["titre"];
-    $date = $_POST["date"];
-    $genre = $_POST["genre"];
-    $resume = $_POST["resume"];
-    $prenomAuteur = $_POST["prenomAuteur"];
-    $nomAuteur = $_POST["nomAuteur"];
-    $nomEditeur = $_POST["nomEditeur"];
+        $titre = $_POST["titre"];
+        $date = $_POST["date"];
+        $genre = $_POST["genre"];
+        $resume = $_POST["resume"];
+        $prenomAuteur = $_POST["prenomAuteur"];
+        $nomAuteur = $_POST["nomAuteur"];
+        $nomEditeur = $_POST["nomEditeur"];
 
-    /* creer un livre avec son auteur son editeur */
-    if($action == "creer"){
-        /* Pour auteur */
-        $auteurArray = array("prenomAuteur" => $prenomAuteur, "nomAuteur" => $nomAuteur);
-        $auteurId = $auteur->insert($auteurArray);
+        /* creer un livre avec son auteur son editeur */
+        if($action == "creer"){
+            /* Pour auteur */
+            $auteurArray = array("prenomAuteur" => $prenomAuteur, "nomAuteur" => $nomAuteur);
+            $auteurId = $auteur->insert($auteurArray);
 
-        /* Pour Editeur */
-        $editeurArray = array("nomEditeur" => $nomEditeur);
-        $editeurId = $editeur->insert($editeurArray);
+            /* Pour Editeur */
+            $editeurArray = array("nomEditeur" => $nomEditeur);
+            $editeurId = $editeur->insert($editeurArray);
 
-        /* Pour Livre */
-        $LivreArray = array("titre" => $titre, "dateParution" => $date, "idGenre" => $genre, 
-                            "resume" =>$resume, "idAuteur" =>$auteurId, "idEditeur" =>$editeurId);
-        $livre->insert($LivreArray);
-    }
+            /* Pour Livre */
+            $LivreArray = array("titre" => $titre, "dateParution" => $date, "idGenre" => $genre, 
+                                "resume" =>$resume, "idAuteur" =>$auteurId, "idEditeur" =>$editeurId);
+            $livre->insert($LivreArray);
+        }
 
-    /* modifier un livre, son auteur et son editeur */
-    if($action == "sauvegarder"){
-        $idLivre = $_POST["idLivre"];
-        $idAuteur = $_POST["idAuteur"];
-        $idEditeur = $_POST["idEditeur"];
+        /* modifier un livre, son auteur et son editeur */
+        if($action == "sauvegarder"){
+            $idLivre = $_POST["idLivre"];
+            $idAuteur = $_POST["idAuteur"];
+            $idEditeur = $_POST["idEditeur"];
 
-        /* Pour auteur */
-        $auteurArray = array("idAuteur" => $idAuteur, "prenomAuteur" => $prenomAuteur, "nomAuteur" => $nomAuteur);
-        $auteur->update($auteurArray,"idAuteur", $idAuteur);
+            /* Pour auteur */
+            $auteurArray = array("idAuteur" => $idAuteur, "prenomAuteur" => $prenomAuteur, "nomAuteur" => $nomAuteur);
+            $auteur->update($auteurArray,"idAuteur", $idAuteur);
 
-        /* Pour Editeur */
-        $editeurArray = array("idEditeur" => $idEditeur, "nomEditeur" => $nomEditeur);
-        $editeur->update($editeurArray, "idEditeur", $idEditeur);
+            /* Pour Editeur */
+            $editeurArray = array("idEditeur" => $idEditeur, "nomEditeur" => $nomEditeur);
+            $editeur->update($editeurArray, "idEditeur", $idEditeur);
 
-        /* Pour Livre */
-        $LivreArray = array("idLivre" => $idLivre, "titre" => $titre, "dateParution" => $date, "idGenre" => $genre, 
-                            "resume" =>$resume, "idAuteur" =>$idAuteur, "idEditeur" =>$idEditeur);
-        $livre->update($LivreArray, "idLivre", $idLivre);
+            /* Pour Livre */
+            $LivreArray = array("idLivre" => $idLivre, "titre" => $titre, "dateParution" => $date, "idGenre" => $genre, 
+                                "resume" =>$resume, "idAuteur" =>$idAuteur, "idEditeur" =>$idEditeur);
+            $livre->update($LivreArray, "idLivre", $idLivre);
 
+        }
     }
     
     /* redirection vers la liste des livres */
