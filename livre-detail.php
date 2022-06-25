@@ -22,6 +22,12 @@ if(isset($_GET["id"])){
 /* on recupere l'action dans l'url */
 if(isset($_GET["action"])){
 
+    /* supprimer un livre avec son id */
+    if($action == "supprimer"){
+        $idSupprimer = $_GET["id"];
+        $livre->delete($idSupprimer);
+    }
+
     $action = $_GET["action"];
     $titre = $_POST["titre"];
     $date = $_POST["date"];
@@ -66,12 +72,6 @@ if(isset($_GET["action"])){
                             "resume" =>$resume, "idAuteur" =>$idAuteur, "idEditeur" =>$idEditeur);
         $livre->update($LivreArray, "idLivre", $idLivre);
 
-    }
-
-    /* supprimer un livre avec son id */
-    if($action == "supprimer"){
-        $idSupprimer = $_GET["id"];
-        $livre->delete($idSupprimer);
     }
     
     /* redirection vers la liste des livres */

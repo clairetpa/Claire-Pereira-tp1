@@ -2,6 +2,9 @@
 class Livre extends Crud {
     protected $table = 'Livre';
     protected $primaryKey = 'idLivre'; 
+    
+    public function __construct(){
+    }
 
     /* Avec Jointure */
     public function select($champOrdre = null, $ordre = null){
@@ -24,6 +27,9 @@ class Livre extends Crud {
         $query->bindValue(":$champ", $id);
         $query->execute();
         return $query->fetch();
+    }
+
+    public function __destruct(){
     }
 }
 
